@@ -5,10 +5,12 @@
   "packageManager": "pnpm@9.15.1",
   "license": "MIT",
   "scripts": {
+    "dev:ui": "pnpm -C packages/ui run dev",
     "prepare": "simple-git-hooks",
     "up": "taze latest -I -f -r",
     "prettier": "prettier --write .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "play": "pnpm -C playground run dev"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.12.1",
