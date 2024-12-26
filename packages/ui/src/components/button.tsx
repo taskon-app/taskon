@@ -1,21 +1,12 @@
-<script setup lang="ts">
 import { cn } from "@/utils"
 import { cva, type VariantProps } from "class-variance-authority"
-import { computed, useAttrs, type ButtonHTMLAttributes } from "vue"
+import { type ButtonHTMLAttributes, computed, defineComponent } from "vue"
 
-defineOptions({
-  name: "Button",
-})
+export interface ButtonProps
+  extends ButtonHTMLAttributes,
+    VariantProps<typeof ButtonVariants> {}
 
-interface ButtonProps
-  extends /* @vue-ignore */ ButtonHTMLAttributes,
-    /* @vue-ignore */ VariantProps<typeof buttonVariants> {}
-
-defineProps<ButtonProps>()
-
-const attrs = useAttrs() as ButtonProps
-
-const buttonVariants = cva(
+export const ButtonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
@@ -43,20 +34,24 @@ const buttonVariants = cva(
     },
   },
 )
+export const Button = defineComponent<ButtonProps>({
+  name: "Button",
+  setup(_, { slots, attrs }) {
+    const _props = attrs as ButtonProps
 
-const buttonClasses = computed(() =>
-  cn(
-    buttonVariants({
-      variant: attrs.variant,
-      size: attrs.size,
-      class: attrs.class,
-    }),
-  ),
-)
-</script>
-
-<template>
-  <button :class="buttonClasses">
-    <slot />
-  </button>
-</template>
+    const buttonClasses = computed(() =>
+      cn(
+        ButtonVariants({
+          variant: _props.variant,
+          size: _props.size,
+          class: _props.class,
+        }),
+      ),
+    )
+    return () => (
+      <button {..._props} class={buttonClasses.value}>
+        {slots.default?.()}
+      </button>
+    )
+  },
+})
