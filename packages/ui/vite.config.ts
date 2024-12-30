@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs"
 import { fileURLToPath, URL } from "node:url"
 import vue from "@vitejs/plugin-vue"
+import vueJsx from "@vitejs/plugin-vue-jsx"
 import uno from "unocss/vite"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
@@ -8,6 +9,7 @@ import dts from "vite-plugin-dts"
 export default defineConfig({
   plugins: [
     vue(),
+    vueJsx(),
     dts({ tsconfigPath: "./tsconfig.json" }),
     uno(),
     {

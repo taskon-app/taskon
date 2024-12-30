@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "lib": ["esnext", "DOM", "DOM.Iterable"],
     "moduleDetection": "force",
     "useDefineForClassFields": true,
