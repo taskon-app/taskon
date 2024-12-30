@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { Button } from "@taskon/ui"
+import { Button, type ButtonProps } from "@taskon/ui"
 import { ref } from "vue"
 
 // TODO better type support
-const variant = ref("default")
-const size = ref("default")
+const variant = ref<ButtonProps["variant"]>("default")
+const size = ref<ButtonProps["size"]>("default")
 </script>
 
 <template>
-  <!-- @vue-expect-error TODO types export -->
   <Button :variant="variant" :size="size">btn text</Button>
   <div>
     variants:

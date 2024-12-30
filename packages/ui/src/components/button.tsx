@@ -1,6 +1,11 @@
 import { cn } from "@/utils"
 import { cva, type VariantProps } from "class-variance-authority"
-import { type ButtonHTMLAttributes, computed, defineComponent } from "vue"
+import {
+  type ButtonHTMLAttributes,
+  defineComponent,
+  useAttrs,
+  useSlots,
+} from "vue"
 
 export interface ButtonProps
   extends ButtonHTMLAttributes,
@@ -34,24 +39,31 @@ export const ButtonVariants = cva(
     },
   },
 )
-export const Button = defineComponent<ButtonProps>({
-  name: "Button",
-  setup(_, { slots, attrs }) {
-    const _props = attrs as ButtonProps
 
-    const buttonClasses = computed(() =>
-      cn(
+export const Button = defineComponent<ButtonProps>(
+  () => {
+    const attrs = useAttrs() as ButtonProps
+    const slots = useSlots()
+
+    return () => {
+      const { variant, size, class: className, ...props } = attrs
+      const buttonClass = cn(
         ButtonVariants({
-          variant: _props.variant,
-          size: _props.size,
-          class: _props.class,
+          variant,
+          size,
+          class: className,
         }),
-      ),
-    )
-    return () => (
-      <button {..._props} class={buttonClasses.value}>
-        {slots.default?.()}
-      </button>
-    )
+      )
+
+      return (
+        <button {...props} class={buttonClass}>
+          {slots.default?.()}
+        </button>
+      )
+    }
   },
-})
+  {
+    name: "Button",
+    inheritAttrs: false,
+  },
+)

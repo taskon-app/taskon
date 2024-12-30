@@ -2,10 +2,11 @@
   "name": "taskon-monorepo",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@9.15.1",
+  "packageManager": "pnpm@9.15.2",
   "license": "MIT",
   "scripts": {
     "dev:ui": "pnpm -C packages/ui run dev",
+    "build:ui": "pnpm -C packages/ui run build",
     "prepare": "simple-git-hooks",
     "up": "taze latest -I -f -r",
     "prettier": "prettier --write .",
